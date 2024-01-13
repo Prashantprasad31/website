@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../Accounts/accounts.css">
+    <link rel="stylesheet" href="../Accounts/index.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+</head>
+
+<body>
+    <section id="header">
+        <header class="header">
+            <a href="" class="logo"><b>Accounts Dashboard</b></a>
+            <input class="menu-btn" type="checkbox" id="menu-btn" />
+            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li><a href="#work">Dashboard</a></li>
+                <li><a href="http://127.0.0.1:5500/login/kimaya_normal.html" target="_blank">Forms</a></li>
+                <li><a href="https://docs.google.com/spreadsheets/d/1enrNGY2vYturkg3GVgYIThi_nn5hjbweYf8ZbihIbYQ/edit#gid=0"
+                        target="_blank">Fms</a></li>
+                <li><a href="#contact">Log Out</a></li>
+            </ul>
+        </header>
+        <div id="box">
+            <div id="dashboardbox">
+                <div class="box" id="pettycash">
+                    <h3>Upload Account Details</h3>
+                    <div class="imageUpload">
+                        <label for="folder">Select Folder:</label>
+                        <select id="folder" class="folder-dropdown">
+                            <option value="Petty cash">Petty Cash</option>
+                            <option value="Sales">Sales</option>
+                            <option value="AllSalesTotal">AllSalesTotal</option>
+                            <!-- Add more options if you have additional folders -->
+                        </select>
+                        <input type="file" id="fileInput" class="inp" onchange="getImageData(event)" multiple />
+                        <button onclick="selectImage()" class="selectImage">Select Images</button>
+                        <div class="metaData"></div>
+                        <div class="progressBar">
+                            <div class="progress"></div>
+                        </div>
+                        <button onclick="uploadImage()" class="upload">Upload</button>
+                        <span class="completeMsg"></span>
+                        <span class="loading">Loading...</span>
+                        <div class="images"></div>
+                    </div>
+                </div>
+                <div class="box" id="sales">
+                    <h1>Blank Box </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJIUlFy-Yf8ltGI_Fc2Mq0ekdNe2JTIkw",
+            authDomain: "accountfileuploadjs.firebaseapp.com",
+            projectId: "accountfileuploadjs",
+            storageBucket: "accountfileuploadjs.appspot.com",
+            messagingSenderId: "658262413928",
+            appId: "1:658262413928:web:ea1fe7c1ad0171af32e1dd"
+        };
+
+
+        const app = firebase.initializeApp(firebaseConfig);
+
+        const storage = firebase.storage();
+
+        const inp = document.querySelector(".inp");
+        const progressbar = document.querySelector(".progress");
+        const img = document.querySelector(".img");
+        const body = document.querySelector("body");
+        const metaData = document.querySelector(".metaData");
+        const images = document.querySelector(".images");
+        const loading = document.querySelector(".loading");
+        const imageUpload = document.querySelector(".imageUpload");
+        const completeMsg = document.querySelector(".completeMsg");
+        let file;
+        let files;
+        let fileName;
+        let progress;
+        let uploadedFileName;
+        const selectImage = () => {
+            inp.click();
+        };
+        const getImageData = (e) => {
+            files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                let imageData = document.createElement("span");
+                imageData.className = 'filedata';
+                imageData.style.display = 'block';
+                imageData.innerHTML = files[i].name;
+                metaData.appendChild(imageData);
+            }
+        };
+
+        const uploadImage = async () => {
+            for (let i = 0; i < files.length; i++) {
+                let url = await uploadProcess(files[i], Math.round(Math.random() * 9999) + files[i].name);
+                if (url) {
+                    loading.style.display = 'none';
+                    let image = document.createElement("img");
+                    image.style.display = 'block';
+                    image.setAttribute('src', url);
+                    image.className = 'img';
+                    images.appendChild(image);
+                }
+                if (i === files.length - 1) {
+                    completeMsg.innerHTML = `${files.length} files uploaded successfully`;
+                }
+            }
+        };
+
+        const uploadProcess = (file, fileName) => {
+            return new Promise((resolve, reject) => {
+                const storageRef = storage.ref().child("Petty cash");
+                const folderRef = storageRef.child(fileName);
+                const uploadtask = folderRef.put(file);
+                uploadtask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        loading.style.display = 'block';
+                        progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        progress = Math.round(progress);
+                        progressbar.style.width = progress + "%";
+                        progressbar.innerHTML = progress + "%";
+                        uploadedFileName = snapshot.ref.name;
+                    },
+                    (error) => {
+                        reject(error);
+                    },
+                    () => {
+                        storage
+                            .ref("Petty cash")
+                            .child(uploadedFileName)
+                            .getDownloadURL()
+                            .then((url) => {
+                                console.log("URL", url);
+                                resolve(url);
+                            });
+                    }
+                );
+            });
+        };
+    </script> -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJIUlFy-Yf8ltGI_Fc2Mq0ekdNe2JTIkw",
+            authDomain: "accountfileuploadjs.firebaseapp.com",
+            projectId: "accountfileuploadjs",
+            storageBucket: "accountfileuploadjs.appspot.com",
+            messagingSenderId: "658262413928",
+            appId: "1:658262413928:web:ea1fe7c1ad0171af32e1dd"
+        };
+
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+        const inp = document.querySelector(".inp");
+        const progressbar = document.querySelector(".progress");
+        const img = document.querySelector(".img");
+        const body = document.querySelector("body");
+        const metaData = document.querySelector(".metaData");
+        const images = document.querySelector(".images");
+        const loading = document.querySelector(".loading");
+        const imageUpload = document.querySelector(".imageUpload");
+        const completeMsg = document.querySelector(".completeMsg");
+        let file;
+        let files;
+        let fileName;
+        let progress;
+        let uploadedFileName;
+
+        const selectedFolder = document.getElementById("folder");
+        const selectImage = () => {
+            inp.click();
+        };
+        const getImageData = (e) => {
+            files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                let imageData = document.createElement("span");
+                imageData.className = 'filedata';
+                imageData.style.display = 'block';
+                imageData.innerHTML = files[i].name;
+                metaData.appendChild(imageData);
+            }
+        };
+
+        const uploadImage = async () => {
+            for (let i = 0; i < files.length; i++) {
+                let folderName;
+                if (selectedFolder.value === "AllSalesTotal") {
+                    folderName = "AllSalesTotal";
+                } else if (selectedFolder.value === "Sales") {
+                    folderName = "Sales";
+                } else {
+                    folderName = "Petty cash";
+                }
+                let url = await uploadProcess(files[i], Math.round(Math.random() * 9999) + files[i].name, folderName);
+                // Rest of your code...
+                if (url) {
+                    loading.style.display = 'none';
+                    let image = document.createElement("img");
+                    image.style.display = 'block';
+                    image.setAttribute('src', url);
+                    image.className = 'img';
+                    images.appendChild(image);
+                }
+                if (i === files.length - 1) {
+                    completeMsg.innerHTML = `${files.length} files uploaded successfully`;
+                }
+            }
+        };
+
+        const uploadProcess = (file, fileName, folderName) => {
+            return new Promise((resolve, reject) => {
+                const storageRef = storage.ref().child(folderName); // Use the provided folderName parameter
+                const folderRef = storageRef.child(fileName);
+                const uploadtask = folderRef.put(file);
+                uploadtask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        loading.style.display = 'block';
+                        progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        progress = Math.round(progress);
+                        progressbar.style.width = progress + "%";
+                        progressbar.innerHTML = progress + "%";
+                        uploadedFileName = snapshot.ref.name;
+                    },
+                    (error) => {
+                        reject(error);
+                    },
+                    () => {
+                        storage
+                            .ref(folderName) // Use the provided folderName parameter
+                            .child(uploadedFileName)
+                            .getDownloadURL()
+                            .then((url) => {
+                                console.log("URL", url);
+                                resolve(url);
+                            });
+                    }
+                );
+            });
+        };
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
